@@ -37,21 +37,21 @@ class BudgetApp {
   initializeApp() {
     this.enterButton = document.querySelector(this.UiSelectors.enterButton);
     this.descriptionInput = document.getElementById(
-      this.UiSelectors.descriptionInput,
+      this.UiSelectors.descriptionInput
     );
     this.valueInput = document.getElementById(this.UiSelectors.valueInput);
     this.switchInput = document.getElementById(this.UiSelectors.switchInput);
 
     this.balanceList = document.querySelector(this.UiSelectors.balanceList);
     this.balanceListIncomes = document.querySelector(
-      this.UiSelectors.balanceListIncomes,
+      this.UiSelectors.balanceListIncomes
     );
     this.balanceListExpenses = document.querySelector(
-      this.UiSelectors.balanceListExpenses,
+      this.UiSelectors.balanceListExpenses
     );
 
     this.totalBudgetInfo = document.querySelector(
-      this.UiSelectors.totalBudgetInfo,
+      this.UiSelectors.totalBudgetInfo
     );
     this.error = document.querySelector(this.UiSelectors.error);
 
@@ -63,11 +63,11 @@ class BudgetApp {
       isPlus
         ? this.balanceListIncomes.insertAdjacentHTML(
             'beforeend',
-            this.createItem(id, isPlus, description, value),
+            this.createItem(id, isPlus, description, value)
           )
         : this.balanceListExpenses.insertAdjacentHTML(
             'beforeend',
-            this.createItem(id, isPlus, description, value),
+            this.createItem(id, isPlus, description, value)
           );
     });
 
@@ -114,8 +114,8 @@ class BudgetApp {
         newItem.id,
         newItem.isPlus,
         newItem.description,
-        newItem.value,
-      ),
+        newItem.value
+      )
     );
     this.resetInputsValues();
     this.updateTotalBudget();
@@ -139,7 +139,7 @@ class BudgetApp {
     const { element, id } = this.getListElement(target);
     this.editedItem = element;
     const { description, value, isPlus } = this.balanceItems.find(
-      (item) => item.id === id,
+      (item) => item.id === id
     );
 
     this.descriptionInput.value = description;
@@ -156,7 +156,7 @@ class BudgetApp {
           item.description = this.descriptionInput.value;
         } else {
           this.deleteItem(
-            this.editedItem.querySelector(this.UiSelectors.deleteButton),
+            this.editedItem.querySelector(this.UiSelectors.deleteButton)
           );
           this.editedItem = null;
           this.addItem();
@@ -172,13 +172,13 @@ class BudgetApp {
     this.balanceItems = items;
 
     this.editedItem.querySelector(
-      this.UiSelectors.itemDescription,
+      this.UiSelectors.itemDescription
     ).textContent = this.descriptionInput.value;
     this.editedItem.querySelector(
-      this.UiSelectors.itemValue,
+      this.UiSelectors.itemValue
     ).textContent = this.formatPrice(
-      parseInt(this.valueInput.value, 10),
-      !this.switchInput.checked,
+      parseFloat(this.valueInput.value),
+      !this.switchInput.checked
     );
 
     this.updateTotalBudget();
@@ -194,8 +194,8 @@ class BudgetApp {
         <p class="item__value ${
           isPositive ? 'item__value--income' : 'item__value--expense'
         }" data-item-value>${this.formatPrice(
-      parseInt(price, 10),
-      isPositive,
+      parseFloat(price),
+      isPositive
     )}</p>
         <div class="item__buttons">
           <button
@@ -254,8 +254,8 @@ class BudgetApp {
     this.totalBudget = 0;
     this.balanceItems.forEach(({ isPlus, value }) => {
       isPlus
-        ? (this.totalBudget += parseInt(value, 10))
-        : (this.totalBudget -= parseInt(value, 10));
+        ? (this.totalBudget += parseFloat(value))
+        : (this.totalBudget -= parseFloat(value));
     });
 
     this.totalBudgetInfo.innerHTML = `Your total budget is <span class="${
@@ -264,7 +264,7 @@ class BudgetApp {
         : 'balance__heading--negative'
     }">${this.formatPrice(
       Math.abs(this.totalBudget),
-      this.totalBudget >= 0 ? true : false,
+      this.totalBudget >= 0 ? true : false
     )}</span>`;
   }
 
